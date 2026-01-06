@@ -1,4 +1,4 @@
-# 🌌 BuyNexa - Hyper-Premium E-Commerce Experience
+# 🌌 BuyNexa 
 
 BuyNexa is a state-of-the-art, hyper-premium e-commerce platform designed for elite footwear. Built on **Django 5.x**, it features a cinematic "Midnight & Neon" design system, AI-generated commercial assets, and a highly optimized user journey.
 
