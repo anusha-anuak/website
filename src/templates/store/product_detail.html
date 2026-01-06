@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="product-detail-container animate">
+    <div>
+        {% if product.image %}
+        <img src="{{ product.image.url }}" alt="{{ product.name }}" class="detail-image">
+        {% else %}
+        <div class="detail-image"
+            style="height: 500px; background: #eee; display:flex; align-items:center; justify-content:center;">No Image
+        </div>
+        {% endif %}
+    </div>
+
+    <div class="detail-info">
+        <div class="product-category">{{ product.category.name }}</div>
+        <h1>{{ product.name }}</h1>
+        <div class="detail-price">${{ product.price }}</div>
+
+        <div class="detail-desc">
+            <p>{{ product.description }}</p>
+        </div>
+
+        <a href="{% url 'add_to_cart' product.id %}" class="btn btn-primary"
+            style="padding: 1rem 3rem; font-size: 1.1rem;">Add to Cart</a>
+
+        {% if user.is_staff %}
+        <div style="margin-top: 1.5rem; display: flex; gap: 1rem;">
+            <a href="{% url 'edit_product' product.slug %}" class="btn btn-outline">Edit</a>
+            <a href="{% url 'delete_product' product.slug %}" class="btn btn-outline"
+                style="color: #dc3545; border-color: #dc3545;">Delete</a>
+        </div>
+        {% endif %}
+
+        <div style="margin-top: 2rem; border-top: 1px solid #eee; padding-top: 1rem;">
+            <small style="color: #888;">Stock: {{ product.stock }} units available</small>
+        </div>
+    </div>
+</div>
+{% endblock %}

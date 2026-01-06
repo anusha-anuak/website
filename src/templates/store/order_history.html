@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="animate">
+    <h1 style="font-family: var(--font-heading); margin-bottom: 2rem;">Order History</h1>
+    
+    {% if orders %}
+        <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+            {% for order in orders %}
+                <div style="background: white; padding: 1.5rem; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.02);">
+                    <div style="display: flex; justify-content: space-between; border-bottom: 1px solid #eee; padding-bottom: 1rem; margin-bottom: 1rem;">
+                        <div>
+                            <strong>Order #{{ order.id }}</strong>
+                            <div style="color: #888; font-size: 0.9rem;">{{ order.created_at|date:"F j, Y" }}</div>
+                        </div>
+                        <div style="text-align: right;">
+                            <div style="color: var(--accent-color); font-weight: 600;">{{ order.status }}</div>
+                            <strong>${{ order.total_price }}</strong>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        {% for item in order.items.all %}
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem; font-size: 0.95rem;">
+                                <span>{{ item.quantity }} x {{ item.product.name }}</span>
+                                <span>${{ item.price }}</span>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>No orders found.</p>
+    {% endif %}
+</div>
+{% endblock %}

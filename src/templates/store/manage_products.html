@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="animate">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+        <h1 style="font-family: var(--font-heading);">Manage Products</h1>
+        <a href="{% url 'add_product' %}" class="btn btn-primary">+ Add New Product</a>
+    </div>
+
+    <div style="background: white; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.02); overflow-x: auto;">
+        <table style="width: 100%; border-collapse: collapse;">
+            <thead>
+                <tr style="background: #f8f9fa; border-bottom: 1px solid #eee;">
+                    <th style="padding: 1rem; text-align: left;">Image</th>
+                    <th style="padding: 1rem; text-align: left;">Name</th>
+                    <th style="padding: 1rem; text-align: left;">Category</th>
+                    <th style="padding: 1rem; text-align: left;">Price</th>
+                    <th style="padding: 1rem; text-align: left;">Stock</th>
+                    <th style="padding: 1rem; text-align: right;">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for product in products %}
+                <tr style="border-bottom: 1px solid #eee;">
+                    <td style="padding: 1rem;">
+                        {% if product.image %}
+                        <img src="{{ product.image.url }}" alt="{{ product.name }}"
+                            style="width: 50px; height: 50px; object-fit: cover; border-radius: 4px;">
+                        {% else %}
+                        <div style="width: 50px; height: 50px; background: #eee; border-radius: 4px;"></div>
+                        {% endif %}
+                    </td>
+                    <td style="padding: 1rem;">
+                        <strong>{{ product.name }}</strong>
+                    </td>
+                    <td style="padding: 1rem;">{{ product.category.name }}</td>
+                    <td style="padding: 1rem;">${{ product.price }}</td>
+                    <td style="padding: 1rem;">{{ product.stock }}</td>
+                    <td style="padding: 1rem; text-align: right;">
+                        <a href="{% url 'edit_product' product.slug %}"
+                            style="color: var(--primary-color); margin-right: 1rem; font-weight: 500;">Edit</a>
+                        <a href="{% url 'delete_product' product.slug %}"
+                            style="color: #dc3545; font-weight: 500;">Delete</a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="6" style="padding: 2rem; text-align: center; color: #666;">No products found.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

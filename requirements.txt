@@ -1,0 +1,7 @@
+django
+django-allauth
+pillow
+requests
+requests-oauthlib
+cryptography
+pyjwt

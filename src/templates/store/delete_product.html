@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="auth-container animate" style="max-width: 500px; text-align: center;">
+    <h1 style="font-family: var(--font-heading); margin-bottom: 2rem; color: #dc3545;">Delete Product?</h1>
+
+    <p style="margin-bottom: 2rem; font-size: 1.1rem;">
+        Are you sure you want to delete <strong>"{{ product.name }}"</strong>?<br>
+        This action cannot be undone.
+    </p>
+
+    <form method="post">
+        {% csrf_token %}
+        <div style="display: flex; gap: 1rem; justify-content: center;">
+            <a href="{% url 'product_detail' product.slug %}" class="btn btn-outline"
+                style="min-width: 120px;">Cancel</a>
+            <button type="submit" class="btn btn-primary"
+                style="background-color: #dc3545; min-width: 120px;">Delete</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

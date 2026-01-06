@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="animate" style="max-width: 800px; margin: 0 auto;">
+    <h1 style="font-family: var(--font-heading); margin-bottom: 2rem;">Checkout</h1>
+
+    <div style="background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.05);">
+        <form method="post">
+            {% csrf_token %}
+            <div class="grid grid-2">
+                <div class="form-group">
+                    <label style="display: block; margin-bottom: 0.5rem; font-weight: 500;">Full Name</label>
+                    <input type="text" name="full_name" class="form-control" required
+                        value="{{ request.user.first_name }} {{ request.user.last_name }}">
+                </div>
+                <div class="form-group">
+                    <label style="display: block; margin-bottom: 0.5rem; font-weight: 500;">Postal Code</label>
+                    <input type="text" name="postal_code" class="form-control" required>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label style="display: block; margin-bottom: 0.5rem; font-weight: 500;">Address</label>
+                <textarea name="address" class="form-control" rows="3" required></textarea>
+            </div>
+
+            <div class="form-group">
+                <label style="display: block; margin-bottom: 0.5rem; font-weight: 500;">City</label>
+                <input type="text" name="city" class="form-control" required>
+            </div>
+
+            <div style="margin-top: 2rem; padding-top: 2rem; border-top: 1px solid #eee;">
+                <div
+                    style="display: flex; justify-content: space-between; margin-bottom: 2rem; font-size: 1.2rem; font-weight: 700;">
+                    <span>Total Amount</span>
+                    <span>${{ cart.total_price }}</span>
+                </div>
+
+                <button type="submit" class="btn btn-primary" style="width: 100%; padding: 1rem;">Continue to
+                    Payment</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
