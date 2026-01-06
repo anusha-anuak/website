@@ -1,7 +1,7 @@
 import os
 import django
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'shoestore.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'BuyNexa.settings')
 django.setup()
 
 from django.contrib.sites.models import Site

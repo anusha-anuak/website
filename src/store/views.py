@@ -57,9 +57,6 @@ def remove_from_cart(request, item_id):
     messages.success(request, "Item removed from cart.")
     return redirect('cart_detail')
 
-    messages.success(request, "Item removed from cart.")
-    return redirect('cart_detail')
-
 from django.contrib.auth.decorators import login_required, user_passes_test
 from .forms import ProductForm, UserUpdateForm
 

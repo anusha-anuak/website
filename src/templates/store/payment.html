@@ -1,56 +1,82 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="animate" style="max-width: 800px; margin: 0 auto;">
-    <h1 style="font-family: var(--font-heading); margin-bottom: 2rem;">Payment</h1>
+<div class="animate" style="max-width: 900px; margin: 0 auto;">
+    <header style="margin-bottom: 3rem; text-align: center;">
+        <h1 style="font-size: 2.5rem; margin-bottom: 0.5rem;">Secure Payment</h1>
+        <p style="color: var(--text-dim);">One last step to confirm your order.</p>
+    </header>
 
-    <div
-        style="background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); margin-bottom: 2rem;">
-        <h3 style="margin-bottom: 1.5rem;">Order Summary</h3>
-        <div style="margin-bottom: 1rem; color: #666;">
-            <strong>Ship to:</strong><br>
-            {{ shipping_info.full_name }}<br>
-            {{ shipping_info.address }}<br>
-            {{ shipping_info.city }}, {{ shipping_info.postal_code }}
+    <div style="display: grid; grid-template-columns: 1.2fr 1fr; gap: 3rem; align-items: start;">
+        <div class="cart-summary-card">
+            <h3 style="margin-bottom: 2rem;">Card Details</h3>
+            <form method="post">
+                {% csrf_token %}
+                <div style="display: grid; gap: 1.5rem;">
+                    <div class="form-group">
+                        <label
+                            style="display: block; margin-bottom: 0.5rem; font-weight: 600; font-size: 0.85rem;">Cardholder
+                            Name</label>
+                        <input type="text" class="form-control" placeholder="Name on card"
+                            value="{{ shipping_info.full_name }}" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label style="display: block; margin-bottom: 0.5rem; font-weight: 600; font-size: 0.85rem;">Card
+                            Number</label>
+                        <div style="position: relative;">
+                            <input type="text" class="form-control" placeholder="0000 0000 0000 0000" maxlength="19"
+                                required>
+                        </div>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: 1.5fr 1fr; gap: 1rem;">
+                        <div class="form-group">
+                            <label
+                                style="display: block; margin-bottom: 0.5rem; font-weight: 600; font-size: 0.85rem;">Expiry
+                                Date</label>
+                            <input type="text" class="form-control" placeholder="MM / YY" required>
+                        </div>
+                        <div class="form-group">
+                            <label
+                                style="display: block; margin-bottom: 0.5rem; font-weight: 600; font-size: 0.85rem;">CVV</label>
+                            <input type="password" class="form-control" placeholder="123" maxlength="3" required>
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 1rem;">
+                        <button type="submit" class="btn btn-primary" style="width: 100%; padding: 1.25rem;">
+                            Pay ${{ cart.total_price }} Now
+                        </button>
+                    </div>
+                </div>
+            </form>
+
+            <div style="margin-top: 2rem; display: flex; justify-content: center; gap: 1rem; opacity: 0.5;">
+                <!-- Dummy payment icons -->
+                <small>🔒 Encrypted & Secure</small>
+            </div>
         </div>
+
         <div
-            style="display: flex; justify-content: space-between; margin-bottom: 0.5rem; font-size: 1.2rem; font-weight: 700;">
-            <span>Total Amount</span>
-            <span>${{ cart.total_price }}</span>
+            style="background: rgba(0,0,0,0.02); padding: 2.5rem; border-radius: 24px; border: 1px dashed rgba(0,0,0,0.05);">
+            <h4 style="margin-bottom: 1.5rem; font-size: 1.1rem;">Shipping To</h4>
+            <div style="font-size: 0.95rem; color: var(--text-dim); line-height: 1.6;">
+                <p style="color: var(--text-main); font-weight: 600;">{{ shipping_info.full_name }}</p>
+                <p>{{ shipping_info.address }}</p>
+                <p>{{ shipping_info.city }}, {{ shipping_info.postal_code }}</p>
+            </div>
+
+            <div style="border-top: 1px solid rgba(0,0,0,0.05); margin: 2rem 0; padding-top: 2rem;">
+                <h4 style="margin-bottom: 1rem; font-size: 1.1rem;">Order Items</h4>
+                {% for item in cart.items.all %}
+                <div style="display: flex; justify-content: space-between; font-size: 0.9rem; margin-bottom: 0.75rem;">
+                    <span>{{ item.quantity }}x {{ item.product.name }}</span>
+                    <span style="font-weight: 600;">${{ item.total_price }}</span>
+                </div>
+                {% endfor %}
+            </div>
         </div>
-    </div>
-
-    <div style="background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.05);">
-        <h3 style="margin-bottom: 1.5rem;">Payment Details</h3>
-        <form method="post">
-            {% csrf_token %}
-
-            <div class="form-group">
-                <label style="display: block; margin-bottom: 0.5rem; font-weight: 500;">Card Number</label>
-                <input type="text" placeholder="0000 0000 0000 0000" class="form-control" maxlength="19" required>
-            </div>
-
-            <div class="grid grid-2">
-                <div class="form-group">
-                    <label style="display: block; margin-bottom: 0.5rem; font-weight: 500;">Expiry Date</label>
-                    <input type="text" placeholder="MM/YY" class="form-control" maxlength="5" required>
-                </div>
-                <div class="form-group">
-                    <label style="display: block; margin-bottom: 0.5rem; font-weight: 500;">CVV</label>
-                    <input type="text" placeholder="123" class="form-control" maxlength="3" required>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label style="display: block; margin-bottom: 0.5rem; font-weight: 500;">Cardholder Name</label>
-                <input type="text" placeholder="John Doe" class="form-control" required>
-            </div>
-
-            <div style="margin-top: 2rem; padding-top: 2rem; border-top: 1px solid #eee;">
-                <button type="submit" class="btn btn-primary" style="width: 100%; padding: 1rem;">Pay ${{
-                    cart.total_price }}</button>
-            </div>
-        </form>
     </div>
 </div>
 {% endblock %}

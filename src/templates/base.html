@@ -5,29 +5,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}BuyNexa{% endblock %}</title>
+    <title>{% block title %}BuyNexa | Premium Footwear{% endblock %}</title>
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@500;700&display=swap"
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@500;700;800&display=swap"
         rel="stylesheet">
     <!-- CSS -->
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    {% block extra_css %}{% endblock %}
 </head>
 
 <body>
 
     <header>
         <nav>
-            <a href="{% url 'product_list' %}" class="logo">SHOE<span
-                    style="color: var(--accent-color);">STORE</span>.</a>
+            <a href="{% url 'product_list' %}" class="logo">
+                BUY<span style="color: var(--accent);">NEXA</span>
+            </a>
 
             <ul class="nav-links">
                 <li><a href="{% url 'product_list' %}" class="nav-item">Shop</a></li>
                 {% if user.is_staff %}
                 <li><a href="{% url 'manage_products' %}" class="nav-item">Dashboard</a></li>
-                <li><a href="{% url 'add_product' %}" class="nav-item" style="color: var(--accent-color);">+ Add
-                        Product</a></li>
+                <li><a href="{% url 'add_product' %}" class="nav-item" style="color: var(--accent);">+ New Product</a></li>
                 {% endif %}
 
                 {% if user.is_authenticated %}
@@ -43,10 +44,10 @@
                 {% else %}
                 <li><a href="{% url 'account_login' %}" class="nav-item">Login</a></li>
                 <li><a href="{% url 'account_signup' %}" class="btn btn-primary"
-                        style="padding: 0.5rem 1rem; font-size: 0.9rem;">Sign Up</a></li>
+                        style="padding: 0.6rem 1.2rem; font-size: 0.85rem;">Get Started</a></li>
                 {% endif %}
                 <li>
-                    <a href="{% url 'cart_detail' %}" class="nav-item">
+                    <a href="{% url 'cart_detail' %}" class="nav-item" style="position: relative;">
                         Cart
                     </a>
                 </li>
@@ -56,17 +57,23 @@
 
     <div class="container">
         {% if messages %}
-        {% for message in messages %}
-        <div class="alert alert-{{ message.tags }}">
-            {{ message }}
+        <div class="messages-container">
+            {% for message in messages %}
+            <div class="alert alert-{{ message.tags }} animate">
+                {% if message.tags == 'success' %}
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" /></svg>
+                {% endif %}
+                {{ message }}
+            </div>
+            {% endfor %}
         </div>
-        {% endfor %}
         {% endif %}
 
         {% block content %}
         {% endblock %}
     </div>
 
+    {% block extra_js %}{% endblock %}
 </body>
 
 </html>

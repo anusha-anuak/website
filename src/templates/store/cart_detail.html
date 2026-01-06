@@ -2,39 +2,46 @@
 
 {% block content %}
 <div class="animate">
-    <h1 style="font-family: var(--font-heading); margin-bottom: 2rem;">Your Cart</h1>
+    <header style="margin-bottom: 3rem; text-align: center;">
+        <h1 style="font-size: 3rem; margin-bottom: 0.5rem;">Shopping Bag</h1>
+        <p style="color: var(--text-dim);">Review your items and proceed to checkout.</p>
+    </header>
 
     {% if cart.items.exists %}
-    <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 2rem;">
-        <div>
+    <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 3rem;">
+        <div class="cart-table-wrapper">
             <table class="cart-table">
                 <thead>
                     <tr>
                         <th>Product</th>
-                        <th>Price</th>
-                        <th>Quantity</th>
-                        <th>Total</th>
-                        <th>Action</th>
+                        <th style="text-align: center;">Quantity</th>
+                        <th style="text-align: right;">Price</th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for item in cart.items.all %}
                     <tr>
                         <td>
-                            <div style="display: flex; align-items: center; gap: 1rem;">
+                            <div style="display: flex; align-items: center; gap: 1.5rem;">
                                 {% if item.product.image %}
                                 <img src="{{ item.product.image.url }}" alt=""
-                                    style="width: 50px; height: 50px; object-fit: cover; border-radius: 4px;">
+                                    style="width: 80px; height: 80px; object-fit: cover; border-radius: 12px; background: #f5f5f7;">
+                                {% else %}
+                                <div style="width: 80px; height: 80px; background: #f5f5f7; border-radius: 12px;"></div>
                                 {% endif %}
-                                <strong>{{ item.product.name }}</strong>
+                                <div style="display: flex; flex-direction: column; gap: 0.25rem;">
+                                    <strong style="color: var(--text-main); font-size: 1.1rem;">{{ item.product.name
+                                        }}</strong>
+                                    <a href="{% url 'remove_from_cart' item.id %}"
+                                        style="color: #ff4d4f; font-size: 0.85rem; font-weight: 600;">Remove</a>
+                                </div>
                             </div>
                         </td>
-                        <td>${{ item.product.price }}</td>
-                        <td>{{ item.quantity }}</td>
-                        <td>${{ item.total_price }}</td>
-                        <td>
-                            <a href="{% url 'remove_from_cart' item.id %}"
-                                style="color: red; font-size: 0.9rem;">Remove</a>
+                        <td style="text-align: center; font-weight: 600;">
+                            {{ item.quantity }}
+                        </td>
+                        <td style="text-align: right; font-weight: 700; font-size: 1.1rem; color: var(--text-main);">
+                            ${{ item.total_price }}
                         </td>
                     </tr>
                     {% endfor %}
@@ -42,32 +49,46 @@
             </table>
         </div>
 
-        <div
-            style="background: white; padding: 2rem; border-radius: 12px; height: fit-content; box-shadow: 0 4px 6px rgba(0,0,0,0.02);">
-            <h3 style="margin-bottom: 1.5rem;">Summary</h3>
-            <div style="display: flex; justify-content: space-between; margin-bottom: 1rem;">
-                <span>Subtotal</span>
-                <span>${{ cart.total_price }}</span>
+        <div class="cart-summary-card" style="height: fit-content;">
+            <h3 style="margin-bottom: 2rem; font-size: 1.5rem;">Order Summary</h3>
+
+            <div style="display: flex; justify-content: space-between; margin-bottom: 1.25rem;">
+                <span style="color: var(--text-dim);">Subtotal</span>
+                <span style="font-weight: 600;">${{ cart.total_price }}</span>
             </div>
-            <div style="display: flex; justify-content: space-between; margin-bottom: 1rem;">
-                <span>Shipping</span>
-                <span>Free</span>
+
+            <div style="display: flex; justify-content: space-between; margin-bottom: 1.25rem;">
+                <span style="color: var(--text-dim);">Shipping</span>
+                <span style="color: #52c41a; font-weight: 600;">Complimentary</span>
             </div>
-            <div style="border-top: 1px solid #eee; margin: 1rem 0;"></div>
+
+            <div style="border-top: 1.5px solid #f0f0f2; margin: 2rem 0;"></div>
+
             <div
-                style="display: flex; justify-content: space-between; margin-bottom: 2rem; font-weight: 700; font-size: 1.2rem;">
+                style="display: flex; justify-content: space-between; margin-bottom: 2.5rem; font-weight: 800; font-size: 1.5rem;">
                 <span>Total</span>
                 <span>${{ cart.total_price }}</span>
             </div>
 
-            <a href="{% url 'checkout' %}" class="btn btn-primary" style="width: 100%;">Proceed to Checkout</a>
+            <a href="{% url 'checkout' %}" class="btn btn-primary"
+                style="width: 100%; padding: 1.25rem; font-size: 1.1rem;">
+                Checkout Securely
+            </a>
+
+            <p style="text-align: center; margin-top: 1.5rem; color: var(--text-dim); font-size: 0.85rem;">
+                Easy returns within 30 days. Secure encrypted checkout.
+            </p>
         </div>
     </div>
     {% else %}
-    <div style="text-align: center; padding: 4rem;">
-        <h2>Your cart is empty</h2>
-        <p style="margin: 1rem 0 2rem; color: #666;">Looks like you haven't added anything yet.</p>
-        <a href="{% url 'product_list' %}" class="btn btn-primary">Start Shopping</a>
+    <div style="text-align: center; padding: 6rem 2rem; background: white; border-radius: 24px;">
+        <div style="font-size: 4rem; margin-bottom: 1.5rem;">🛍️</div>
+        <h2 style="font-size: 2rem; margin-bottom: 1rem;">Your shopping bag is empty</h2>
+        <p
+            style="margin-bottom: 2.5rem; color: var(--text-dim); max-width: 400px; margin-left: auto; margin-right: auto;">
+            Looks like you haven't added anything yet. Explore our latest arrivals to find your perfect pair.
+        </p>
+        <a href="{% url 'product_list' %}" class="btn btn-primary" style="padding: 1rem 3rem;">Start Shopping</a>
     </div>
     {% endif %}
 </div>

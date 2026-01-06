@@ -2,49 +2,71 @@
 
 {% block content %}
 <div class="animate">
-    <div style="text-align: center; margin-bottom: 3rem; margin-top: 2rem;">
-        <h1 style="font-family: var(--font-heading); font-size: 3rem; margin-bottom: 1rem;">
-            {% if category %}{{ category.name }}{% else %}New Arrivals{% endif %}
-        </h1>
-        <p style="color: #666;">Discover the latest trends in footwear fashion.</p>
-    </div>
+    {% if not category %}
+    <!-- Hero Section for Main Shop Page -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Step Into the Future.</h1>
+            <p>Experience the ultimate blend of comfort and style with our latest footwear collection.</p>
+            <a href="#shop-grid" class="btn btn-primary"
+                style="background: white; color: black; padding: 1rem 2.5rem;">Explore Now</a>
+        </div>
+    </section>
+    {% endif %}
 
-    <!-- Category Filter (Simple List for this demo) -->
-    <div style="margin-bottom: 2rem; display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
-        <a href="{% url 'product_list' %}"
-            class="btn {% if not category %}btn-primary{% else %}btn-outline{% endif %}">All</a>
-        {% for cat in categories %}
-        <a href="{% url 'product_list_by_category' cat.slug %}"
-            class="btn {% if category.slug == cat.slug %}btn-primary{% else %}btn-outline{% endif %}">{{ cat.name }}</a>
-        {% endfor %}
-    </div>
+    <div id="shop-grid" style="margin-top: 2rem;">
+        <div style="text-align: center; margin-bottom: 4rem;">
+            <h2 style="font-size: 2.5rem; margin-bottom: 1rem;">
+                {% if category %}{{ category.name }}{% else %}Featured Collection{% endif %}
+            </h2>
+            <div style="width: 60px; height: 4px; background: var(--accent); margin: 0 auto; border-radius: 2px;"></div>
+        </div>
 
-    <div class="grid grid-3">
-        {% for product in products %}
-        <div class="product-card">
-            <a href="{% url 'product_detail' product.slug %}">
-                {% if product.image %}
-                <img src="{{ product.image.url }}" alt="{{ product.name }}" class="product-image">
-                {% else %}
-                <div class="product-image"
-                    style="display:flex; align-items:center; justify-content:center; color:#ccc;">No Image</div>
-                {% endif %}
-            </a>
-            <div class="product-info">
-                <div class="product-category">{{ product.category.name }}</div>
-                <a href="{% url 'product_detail' product.slug %}">
-                    <h3 class="product-title">{{ product.name }}</h3>
+        <!-- Category Filter -->
+        <div style="margin-bottom: 4rem; display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+            <a href="{% url 'product_list' %}"
+                class="btn {% if not category %}btn-primary{% else %}btn-outline{% endif %}"
+                style="padding: 0.6rem 2rem;">All</a>
+            {% for cat in categories %}
+            <a href="{% url 'product_list_by_category' cat.slug %}"
+                class="btn {% if category.slug == cat.slug %}btn-primary{% else %}btn-outline{% endif %}"
+                style="padding: 0.6rem 2rem;">{{ cat.name }}</a>
+            {% endfor %}
+        </div>
+
+        <div class="grid grid-3">
+            {% for product in products %}
+            <div class="product-card">
+                <a href="{% url 'product_detail' product.slug %}" class="product-image-wrapper">
+                    {% if product.image %}
+                    <img src="{{ product.image.url }}" alt="{{ product.name }}" class="product-image">
+                    {% else %}
+                    <div class="product-image"
+                        style="display:flex; align-items:center; justify-content:center; color:#ccc; background: #f0f0f2;">
+                        No Image</div>
+                    {% endif %}
                 </a>
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 1rem;">
-                    <span class="product-price">${{ product.price }}</span>
-                    <a href="{% url 'add_to_cart' product.id %}" class="btn btn-primary"
-                        style="padding: 0.5rem 1rem; font-size: 0.9rem;">Add</a>
+                <div class="product-info">
+                    <span class="product-category">{{ product.category.name }}</span>
+                    <a href="{% url 'product_detail' product.slug %}">
+                        <h3 class="product-title">{{ product.name }}</h3>
+                    </a>
+                    <div
+                        style="display: flex; justify-content: space-between; align-items: flex-end; margin-top: auto; padding-top: 1.5rem;">
+                        <span class="product-price">${{ product.price }}</span>
+                        <a href="{% url 'add_to_cart' product.id %}" class="btn btn-primary"
+                            style="padding: 0.6rem 1.2rem; font-size: 0.85rem; border-radius: 12px;">
+                            + Add
+                        </a>
+                    </div>
                 </div>
             </div>
+            {% empty %}
+            <div style="grid-column: 1/-1; text-align: center; padding: 5rem;">
+                <p style="color: var(--text-dim); font-size: 1.2rem;">No products found in this category.</p>
+            </div>
+            {% endfor %}
         </div>
-        {% empty %}
-        <p>No products found.</p>
-        {% endfor %}
     </div>
 </div>
 {% endblock %}
