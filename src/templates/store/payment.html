@@ -1,80 +1,95 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="animate" style="max-width: 900px; margin: 0 auto;">
-    <header style="margin-bottom: 3rem; text-align: center;">
-        <h1 style="font-size: 2.5rem; margin-bottom: 0.5rem;">Secure Payment</h1>
-        <p style="color: var(--text-dim);">One last step to confirm your order.</p>
+<div class="animate" style="max-width: 1100px; margin: 0 auto;">
+    <header style="margin-bottom: 5rem; text-align: left;">
+        <span
+            style="color: var(--accent); font-weight: 800; letter-spacing: 0.2em; text-transform: uppercase; font-size: 0.8rem;">Finance</span>
+        <h1 style="font-size: 4.5rem; letter-spacing: -3px; margin-top: 0.5rem;">Secure Exchange</h1>
     </header>
 
-    <div style="display: grid; grid-template-columns: 1.2fr 1fr; gap: 3rem; align-items: start;">
-        <div class="cart-summary-card">
-            <h3 style="margin-bottom: 2rem;">Card Details</h3>
+    <div style="display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 5rem; align-items: start;">
+        <div class="glass" style="padding: 4rem; border-radius: 40px;">
+            <h3 style="margin-bottom: 3rem; font-size: 1.75rem;">Digital Vault Credentials</h3>
             <form method="post">
                 {% csrf_token %}
-                <div style="display: grid; gap: 1.5rem;">
+                <div style="display: grid; gap: 2.5rem;">
                     <div class="form-group">
                         <label
-                            style="display: block; margin-bottom: 0.5rem; font-weight: 600; font-size: 0.85rem;">Cardholder
-                            Name</label>
-                        <input type="text" class="form-control" placeholder="Name on card"
-                            value="{{ shipping_info.full_name }}" required>
+                            style="display: block; margin-bottom: 0.75rem; font-weight: 800; font-size: 0.75rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.1em;">Cardholder
+                            Alias</label>
+                        <input type="text" class="form-control" placeholder="Verified Name"
+                            value="{{ shipping_info.full_name }}" style="background: rgba(0,0,0,0.2);" required>
                     </div>
 
                     <div class="form-group">
-                        <label style="display: block; margin-bottom: 0.5rem; font-weight: 600; font-size: 0.85rem;">Card
-                            Number</label>
-                        <div style="position: relative;">
-                            <input type="text" class="form-control" placeholder="0000 0000 0000 0000" maxlength="19"
-                                required>
+                        <label
+                            style="display: block; margin-bottom: 0.75rem; font-weight: 800; font-size: 0.75rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.1em;">Nexus
+                            Card Identifier</label>
+                        <input type="text" class="form-control" placeholder="**** **** **** ****" maxlength="19"
+                            style="background: rgba(0,0,0,0.2); letter-spacing: 0.2em;" required>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem;">
+                        <div class="form-group">
+                            <label
+                                style="display: block; margin-bottom: 0.75rem; font-weight: 800; font-size: 0.75rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.1em;">Expiration
+                                Hub</label>
+                            <input type="text" class="form-control" placeholder="MO / YR"
+                                style="background: rgba(0,0,0,0.2);" required>
+                        </div>
+                        <div class="form-group">
+                            <label
+                                style="display: block; margin-bottom: 0.75rem; font-weight: 800; font-size: 0.75rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.1em;">Security
+                                Cipher (CVV)</label>
+                            <input type="password" class="form-control" placeholder="***" maxlength="3"
+                                style="background: rgba(0,0,0,0.2);" required>
                         </div>
                     </div>
 
-                    <div style="display: grid; grid-template-columns: 1.5fr 1fr; gap: 1rem;">
-                        <div class="form-group">
-                            <label
-                                style="display: block; margin-bottom: 0.5rem; font-weight: 600; font-size: 0.85rem;">Expiry
-                                Date</label>
-                            <input type="text" class="form-control" placeholder="MM / YY" required>
-                        </div>
-                        <div class="form-group">
-                            <label
-                                style="display: block; margin-bottom: 0.5rem; font-weight: 600; font-size: 0.85rem;">CVV</label>
-                            <input type="password" class="form-control" placeholder="123" maxlength="3" required>
-                        </div>
-                    </div>
-
-                    <div style="margin-top: 1rem;">
-                        <button type="submit" class="btn btn-primary" style="width: 100%; padding: 1.25rem;">
-                            Pay ${{ cart.total_price }} Now
+                    <div style="margin-top: 2rem;">
+                        <button type="submit" class="btn btn-primary"
+                            style="width: 100%; padding: 1.5rem; border-radius: 20px; font-size: 1.1rem; box-shadow: 0 0 30px var(--accent-glow);">
+                            Finalize Exchange: ${{ cart.total_price }}
                         </button>
                     </div>
                 </div>
             </form>
 
-            <div style="margin-top: 2rem; display: flex; justify-content: center; gap: 1rem; opacity: 0.5;">
-                <!-- Dummy payment icons -->
-                <small>🔒 Encrypted & Secure</small>
+            <div style="margin-top: 3rem; text-align: center;">
+                <span
+                    style="font-size: 0.7rem; color: var(--text-secondary); font-weight: 800; text-transform: uppercase; letter-spacing: 0.2em; border: 1px solid var(--glass-border); padding: 0.5rem 1.5rem; border-radius: var(--radius-full);">End-to-End
+                    Encrypted</span>
             </div>
         </div>
 
-        <div
-            style="background: rgba(0,0,0,0.02); padding: 2.5rem; border-radius: 24px; border: 1px dashed rgba(0,0,0,0.05);">
-            <h4 style="margin-bottom: 1.5rem; font-size: 1.1rem;">Shipping To</h4>
-            <div style="font-size: 0.95rem; color: var(--text-dim); line-height: 1.6;">
-                <p style="color: var(--text-main); font-weight: 600;">{{ shipping_info.full_name }}</p>
+        <div class="glass" style="padding: 3rem; border-radius: 40px; border: 1px solid rgba(255,255,255,0.03);">
+            <h4
+                style="margin-bottom: 2rem; font-size: 1.1rem; text-transform: uppercase; color: var(--accent); letter-spacing: 0.1em;">
+                Manifest Summary</h4>
+
+            <div style="font-size: 0.95rem; color: var(--text-secondary); line-height: 2;">
+                <p style="color: white; font-weight: 700;">{{ shipping_info.full_name }}</p>
                 <p>{{ shipping_info.address }}</p>
                 <p>{{ shipping_info.city }}, {{ shipping_info.postal_code }}</p>
             </div>
 
-            <div style="border-top: 1px solid rgba(0,0,0,0.05); margin: 2rem 0; padding-top: 2rem;">
-                <h4 style="margin-bottom: 1rem; font-size: 1.1rem;">Order Items</h4>
+            <div style="border-top: 1px solid var(--glass-border); margin: 2.5rem 0; padding-top: 2.5rem;">
+                <h4
+                    style="margin-bottom: 1.5rem; font-size: 0.9rem; text-transform: uppercase; color: var(--text-secondary);">
+                    Entry Details</h4>
                 {% for item in cart.items.all %}
-                <div style="display: flex; justify-content: space-between; font-size: 0.9rem; margin-bottom: 0.75rem;">
-                    <span>{{ item.quantity }}x {{ item.product.name }}</span>
-                    <span style="font-weight: 600;">${{ item.total_price }}</span>
+                <div style="display: flex; justify-content: space-between; font-size: 0.9rem; margin-bottom: 1rem;">
+                    <span style="color: var(--text-secondary);">{{ item.quantity }}x {{ item.product.name }}</span>
+                    <span style="font-weight: 800; color: white;">${{ item.total_price }}</span>
                 </div>
                 {% endfor %}
+            </div>
+
+            <div
+                style="display: flex; justify-content: space-between; font-weight: 900; font-size: 1.5rem; color: var(--accent); margin-top: 2rem;">
+                <span>TOTAL</span>
+                <span>${{ cart.total_price }}</span>
             </div>
         </div>
     </div>

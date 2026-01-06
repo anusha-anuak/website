@@ -1,66 +1,70 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="animate" style="max-width: 1000px; margin: 0 auto;">
-    <header style="margin-bottom: 4rem;">
-        <h1 style="font-size: 3.5rem; letter-spacing: -2px;">Welcome back, {{ user.first_name|default:user.username }}
-        </h1>
-        <p style="color: var(--text-dim); font-size: 1.1rem;">Manage your account and view your collection.</p>
+<div class="animate" style="max-width: 1200px; margin: 0 auto;">
+    <header style="margin-bottom: 6rem;">
+        <span
+            style="color: var(--accent); font-weight: 800; letter-spacing: 0.2em; text-transform: uppercase; font-size: 0.8rem;">Profile</span>
+        <h1 style="font-size: 5rem; letter-spacing: -4px;">Collector: {{ user.username|upper }}</h1>
+        <p style="color: var(--text-secondary); font-size: 1.25rem; font-weight: 300;">Authorized since {{
+            user.date_joined|date:"Y" }}</p>
     </header>
 
-    <div style="display: grid; grid-template-columns: 1fr 1.5fr; gap: 4rem;">
+    <div style="display: grid; grid-template-columns: 1fr 1.5fr; gap: 6rem;">
         <!-- Profile Settings -->
         <section>
-            <div class="cart-summary-card">
-                <h3 style="margin-bottom: 2rem;">Personal Information</h3>
+            <div class="glass" style="padding: 3.5rem; border-radius: 40px;">
+                <h3 style="margin-bottom: 2.5rem; font-size: 1.75rem; letter-spacing: -1px;">Credentials</h3>
                 <form method="post">
                     {% csrf_token %}
-                    <div style="display: grid; gap: 1.5rem;">
+                    <div style="display: grid; gap: 2rem;">
                         {% for field in form %}
                         <div class="form-group">
                             <label
-                                style="display: block; margin-bottom: 0.5rem; font-weight: 600; font-size: 0.85rem;">{{
+                                style="display: block; margin-bottom: 0.75rem; font-weight: 700; font-size: 0.75rem; color: var(--text-secondary); text-transform: uppercase;">{{
                                 field.label }}</label>
                             {{ field }}
-                            {% if field.errors %}
-                            <small style="color: red;">{{ field.errors.0 }}</small>
-                            {% endif %}
                         </div>
                         {% endfor %}
-                        <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1rem;">Update
-                            Profile</button>
+                        <button type="submit" class="btn btn-primary"
+                            style="width: 100%; margin-top: 1rem; border-radius: 20px;">Update Securely</button>
                     </div>
                 </form>
             </div>
         </section>
 
-        <!-- Recent Orders -->
+        <!-- Recent Acquisitions -->
         <section>
-            <h3 style="margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: center;">
-                Recent Orders
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 3rem;">
+                <h3 style="font-size: 1.75rem; letter-spacing: -1px;">Acquisitions</h3>
                 <a href="{% url 'order_history' %}"
-                    style="font-size: 0.9rem; font-weight: 500; color: var(--accent);">View All</a>
-            </h3>
+                    style="font-size: 0.8rem; font-weight: 800; color: var(--accent); text-transform: uppercase; letter-spacing: 0.1em;">Archive
+                    View</a>
+            </div>
 
-            <div style="display: grid; gap: 1.5rem;">
+            <div style="display: grid; gap: 2rem;">
                 {% for order in orders|slice:":3" %}
                 <div class="glass"
-                    style="padding: 1.5rem; border-radius: 20px; display: flex; justify-content: space-between; align-items: center;">
+                    style="padding: 2.5rem; border-radius: 32px; display: flex; justify-content: space-between; align-items: center; border: 1px solid rgba(255,255,255,0.05);">
                     <div>
-                        <div style="font-weight: 700; margin-bottom: 0.25rem;">Order #{{ order.id }}</div>
-                        <div style="font-size: 0.85rem; color: var(--text-dim);">Placed on {{ order.created_at|date:"F
-                            j, Y" }}</div>
+                        <div
+                            style="font-family: var(--font-heading); font-size: 1.5rem; font-weight: 800; margin-bottom: 0.5rem;">
+                            ENTRY #{{ order.id }}</div>
+                        <div
+                            style="font-size: 0.85rem; color: var(--text-secondary); font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em;">
+                            Status: {{ order.status }}</div>
                     </div>
                     <div style="text-align: right;">
-                        <div style="font-weight: 800; color: var(--primary);">${{ order.total_price }}</div>
-                        <div
-                            style="font-size: 0.75rem; text-transform: uppercase; font-weight: 700; letter-spacing: 1px; color: var(--accent);">
-                            {{ order.status }}</div>
+                        <div style="font-size: 1.75rem; font-weight: 900; color: var(--accent);">${{ order.total_price
+                            }}</div>
+                        <div style="font-size: 0.75rem; color: var(--text-secondary); margin-top: 0.5rem;">{{
+                            order.created_at|date:"d.m.Y" }}</div>
                     </div>
                 </div>
                 {% empty %}
-                <div style="text-align: center; padding: 3rem; background: rgba(0,0,0,0.02); border-radius: 20px;">
-                    <p style="color: var(--text-dim);">No orders yet. Ready to start your collection?</p>
+                <div class="glass"
+                    style="text-align: center; padding: 4rem; border-radius: 32px; border-style: dashed;">
+                    <p style="color: var(--text-secondary);">The collection remains uninitiated.</p>
                 </div>
                 {% endfor %}
             </div>

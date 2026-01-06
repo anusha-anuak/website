@@ -3,35 +3,41 @@
 {% block content %}
 <div class="animate">
     {% if not category %}
-    <!-- Hero Section for Main Shop Page -->
-    <section class="hero">
+    <!-- Hyper-Premium Hero Section -->
+    <section class="hero" style="background-image: url('{% static 'images/hero_banner.png' %}');">
         <div class="hero-content">
-            <h1>Step Into the Future.</h1>
-            <p>Experience the ultimate blend of comfort and style with our latest footwear collection.</p>
-            <a href="#shop-grid" class="btn btn-primary"
-                style="background: white; color: black; padding: 1rem 2.5rem;">Explore Now</a>
+            <h1>Beyond<br>Performance.</h1>
+            <p>The Nexus of futuristic engineering and avant-garde aesthetic. Step into the next era of comfort.</p>
+            <div style="display: flex; gap: 1.5rem;">
+                <a href="#shop-grid" class="btn btn-primary">Enter the Shop</a>
+                <a href="#featured" class="btn btn-outline">Season 2026</a>
+            </div>
         </div>
     </section>
     {% endif %}
 
-    <div id="shop-grid" style="margin-top: 2rem;">
-        <div style="text-align: center; margin-bottom: 4rem;">
-            <h2 style="font-size: 2.5rem; margin-bottom: 1rem;">
-                {% if category %}{{ category.name }}{% else %}Featured Collection{% endif %}
-            </h2>
-            <div style="width: 60px; height: 4px; background: var(--accent); margin: 0 auto; border-radius: 2px;"></div>
-        </div>
+    <div id="shop-grid" style="margin-top: 4rem;">
+        <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 4rem;">
+            <div>
+                <span
+                    style="color: var(--accent); font-weight: 800; letter-spacing: 0.2em; text-transform: uppercase; font-size: 0.8rem;">Catalog</span>
+                <h2 style="font-size: 3.5rem; margin-top: 0.5rem;">
+                    {% if category %}{{ category.name }}{% else %}The Nexus Collection{% endif %}
+                </h2>
+            </div>
 
-        <!-- Category Filter -->
-        <div style="margin-bottom: 4rem; display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
-            <a href="{% url 'product_list' %}"
-                class="btn {% if not category %}btn-primary{% else %}btn-outline{% endif %}"
-                style="padding: 0.6rem 2rem;">All</a>
-            {% for cat in categories %}
-            <a href="{% url 'product_list_by_category' cat.slug %}"
-                class="btn {% if category.slug == cat.slug %}btn-primary{% else %}btn-outline{% endif %}"
-                style="padding: 0.6rem 2rem;">{{ cat.name }}</a>
-            {% endfor %}
+            <!-- Category Filter Pills -->
+            <div
+                style="display: flex; gap: 0.75rem; background: var(--bg-surface); padding: 0.5rem; border-radius: var(--radius-full); border: 1px solid var(--glass-border);">
+                <a href="{% url 'product_list' %}"
+                    class="btn {% if not category %}btn-primary{% else %}btn-outline{% endif %}"
+                    style="padding: 0.5rem 1.5rem; font-size: 0.75rem; border: none;">All</a>
+                {% for cat in categories %}
+                <a href="{% url 'product_list_by_category' cat.slug %}"
+                    class="btn {% if category.slug == cat.slug %}btn-primary{% else %}btn-outline{% endif %}"
+                    style="padding: 0.5rem 1.5rem; font-size: 0.75rem; border: none;">{{ cat.name }}</a>
+                {% endfor %}
+            </div>
         </div>
 
         <div class="grid grid-3">
@@ -41,9 +47,8 @@
                     {% if product.image %}
                     <img src="{{ product.image.url }}" alt="{{ product.name }}" class="product-image">
                     {% else %}
-                    <div class="product-image"
-                        style="display:flex; align-items:center; justify-content:center; color:#ccc; background: #f0f0f2;">
-                        No Image</div>
+                    <img src="{% static 'images/default_shoe.png' %}" alt="{{ product.name }}" class="product-image"
+                        style="opacity: 0.5;">
                     {% endif %}
                 </a>
                 <div class="product-info">
@@ -52,18 +57,19 @@
                         <h3 class="product-title">{{ product.name }}</h3>
                     </a>
                     <div
-                        style="display: flex; justify-content: space-between; align-items: flex-end; margin-top: auto; padding-top: 1.5rem;">
+                        style="display: flex; justify-content: space-between; align-items: center; margin-top: auto; padding-top: 2rem;">
                         <span class="product-price">${{ product.price }}</span>
-                        <a href="{% url 'add_to_cart' product.id %}" class="btn btn-primary"
-                            style="padding: 0.6rem 1.2rem; font-size: 0.85rem; border-radius: 12px;">
-                            + Add
+                        <a href="{% url 'add_to_cart' product.id %}" class="btn glass"
+                            style="padding: 0.75rem 1.25rem; font-size: 0.75rem; border-radius: 12px; border-color: var(--glass-border);">
+                            + Add to Bag
                         </a>
                     </div>
                 </div>
             </div>
             {% empty %}
-            <div style="grid-column: 1/-1; text-align: center; padding: 5rem;">
-                <p style="color: var(--text-dim); font-size: 1.2rem;">No products found in this category.</p>
+            <div style="grid-column: 1/-1; text-align: center; padding: 10rem 0;">
+                <p style="color: var(--text-secondary); font-size: 1.5rem; font-weight: 300;">Archive is currently
+                    empty.</p>
             </div>
             {% endfor %}
         </div>

@@ -5,11 +5,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}BuyNexa | Premium Footwear{% endblock %}</title>
+    <title>{% block title %}BuyNexa | Elite Footwear{% endblock %}</title>
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@500;700;800&display=swap"
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@700;800;900&display=swap"
         rel="stylesheet">
     <!-- CSS -->
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
@@ -19,7 +20,7 @@
 <body>
 
     <header>
-        <nav>
+        <nav class="glass">
             <a href="{% url 'product_list' %}" class="logo">
                 BUY<span style="color: var(--accent);">NEXA</span>
             </a>
@@ -27,28 +28,26 @@
             <ul class="nav-links">
                 <li><a href="{% url 'product_list' %}" class="nav-item">Shop</a></li>
                 {% if user.is_staff %}
-                <li><a href="{% url 'manage_products' %}" class="nav-item">Dashboard</a></li>
-                <li><a href="{% url 'add_product' %}" class="nav-item" style="color: var(--accent);">+ New Product</a></li>
+                <li><a href="{% url 'manage_products' %}" class="nav-item">Catalog</a></li>
                 {% endif %}
 
                 {% if user.is_authenticated %}
                 <li><a href="{% url 'profile' %}" class="nav-item">Profile</a></li>
-                <li><a href="{% url 'order_history' %}" class="nav-item">Orders</a></li>
                 <li>
                     <form method="post" action="{% url 'account_logout' %}" style="display:inline;">
                         {% csrf_token %}
                         <button type="submit" class="nav-item"
-                            style="background:none; border:none; cursor:pointer; font-size:1rem; font-family: inherit;">Logout</button>
+                            style="background:none; border:none; cursor:pointer; font-family: inherit;">Exit</button>
                     </form>
                 </li>
                 {% else %}
                 <li><a href="{% url 'account_login' %}" class="nav-item">Login</a></li>
-                <li><a href="{% url 'account_signup' %}" class="btn btn-primary"
-                        style="padding: 0.6rem 1.2rem; font-size: 0.85rem;">Get Started</a></li>
                 {% endif %}
+
                 <li>
-                    <a href="{% url 'cart_detail' %}" class="nav-item" style="position: relative;">
-                        Cart
+                    <a href="{% url 'cart_detail' %}" class="btn btn-primary"
+                        style="padding: 0.6rem 1.5rem; font-size: 0.8rem;">
+                        Bag
                     </a>
                 </li>
             </ul>
@@ -57,12 +56,9 @@
 
     <div class="container">
         {% if messages %}
-        <div class="messages-container">
+        <div class="messages-container" style="position: fixed; top: 6rem; right: 2rem; z-index: 2000; width: 350px;">
             {% for message in messages %}
-            <div class="alert alert-{{ message.tags }} animate">
-                {% if message.tags == 'success' %}
-                <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" /></svg>
-                {% endif %}
+            <div class="alert alert-{{ message.tags }} glass animate" style="box-shadow: 0 20px 40px rgba(0,0,0,0.4);">
                 {{ message }}
             </div>
             {% endfor %}

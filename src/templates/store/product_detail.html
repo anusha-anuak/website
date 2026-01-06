@@ -6,55 +6,61 @@
         {% if product.image %}
         <img src="{{ product.image.url }}" alt="{{ product.name }}" class="detail-image">
         {% else %}
-        <div class="detail-image"
-            style="height: 500px; background: #f5f5f7; display:flex; align-items:center; justify-content:center; color: #ccc; border-radius: 16px;">
-            <span style="font-size: 1.5rem; font-weight: 500;">No Image Available</span>
-        </div>
+        <img src="{% static 'images/default_shoe.png' %}" alt="{{ product.name }}" class="detail-image"
+            style="opacity: 0.8;">
         {% endif %}
     </div>
 
     <div class="detail-info">
-        <span class="product-category" style="font-size: 0.9rem; margin-bottom: 1rem; display: block;">{{
-            product.category.name }}</span>
+        <span class="product-category" style="font-size: 0.9rem; margin-bottom: 1.5rem; display: block;">{{
+            product.category.name }} Edition</span>
         <h1>{{ product.name }}</h1>
         <div class="detail-price">${{ product.price }}</div>
 
-        <div class="detail-desc">
-            <h4 style="color: var(--text-main); margin-bottom: 0.5rem;">Description</h4>
-            <p>{{ product.description }}</p>
+        <div class="detail-desc"
+            style="background: rgba(255,255,255,0.02); padding: 2rem; border-radius: 20px; border: 1px solid var(--glass-border);">
+            <h4
+                style="color: var(--accent); margin-bottom: 1rem; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 0.1em;">
+                Spec Sheet</h4>
+            <p style="color: var(--text-secondary); line-height: 1.8;">{{ product.description }}</p>
         </div>
 
-        <div style="display: flex; flex-direction: column; gap: 1rem;">
+        <div style="display: flex; gap: 1.5rem; margin-top: 3rem;">
             <a href="{% url 'add_to_cart' product.id %}" class="btn btn-primary"
-                style="padding: 1.25rem; font-size: 1.1rem; width: 100%;">
-                <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                    <path
-                        d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z">
-                    </path>
-                </svg>
-                Add to Shopping Bag
+                style="padding: 1.5rem; font-size: 1rem; flex: 2; border-radius: 20px;">
+                Authenticate & Add to Bag
             </a>
 
-            {% if user.is_staff %}
-            <div style="display: flex; gap: 1rem; margin-top: 1rem;">
-                <a href="{% url 'edit_product' product.slug %}" class="btn btn-outline" style="flex: 1;">Edit
-                    Details</a>
-                <a href="{% url 'delete_product' product.slug %}" class="btn btn-outline"
-                    style="color: #ff4d4f; border-color: #ff4d4f; flex: 1;">Remove Product</a>
+            <div class="btn btn-outline" style="flex: 0.5; padding: 1.5rem; border-radius: 20px;">
+                <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path
+                        d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z">
+                    </path>
+                </svg>
             </div>
-            {% endif %}
         </div>
 
-        <div style="margin-top: 3rem; border-top: 1px solid #eee; padding-top: 1.5rem;">
-            <div style="display: flex; align-items: center; gap: 0.5rem; color: var(--text-dim); font-size: 0.9rem;">
+        {% if user.is_staff %}
+        <div style="display: flex; gap: 1rem; margin-top: 1.5rem;">
+            <a href="{% url 'edit_product' product.slug %}" class="btn btn-outline"
+                style="flex: 1; font-size: 0.8rem; padding: 1rem;">Modify Entry</a>
+            <a href="{% url 'delete_product' product.slug %}" class="btn btn-outline"
+                style="color: #ff4d4f; border-color: rgba(255,77,79,0.2); flex: 1; font-size: 0.8rem; padding: 1rem;">Expunge</a>
+        </div>
+        {% endif %}
+
+        <div style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--glass-border);">
+            <div style="display: flex; align-items: center; gap: 1rem;">
                 <div
-                    style="width: 8px; height: 8px; background: {% if product.stock > 0 %}#52c41a{% else %}#ff4d4f{% endif %}; border-radius: 50%;">
+                    style="width: 12px; height: 12px; background: {% if product.stock > 0 %}var(--accent){% else %}#ff4d4f{% endif %}; border-radius: 50%; box-shadow: 0 0 10px var(--accent-glow);">
                 </div>
-                {% if product.stock > 0 %}
-                {{ product.stock }} units in stock. Ready to ship.
-                {% else %}
-                Out of stock.
-                {% endif %}
+                <span style="font-weight: 700; font-size: 0.9rem; color: var(--text-secondary);">
+                    {% if product.stock > 0 %}
+                    IN STOCK: {{ product.stock }} UNITS ALLOCATED
+                    {% else %}
+                    OUT OF STOCK: BACKORDER ACTIVE
+                    {% endif %}
+                </span>
             </div>
         </div>
     </div>

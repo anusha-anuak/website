@@ -1,54 +1,59 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="animate" style="max-width: 800px; margin: 0 auto;">
-    <header style="margin-bottom: 3rem; text-align: center;">
-        <h1 style="font-size: 2.5rem; margin-bottom: 0.5rem;">Shipping Details</h1>
-        <p style="color: var(--text-dim);">Where should we send your new footwear?</p>
+<div class="animate" style="max-width: 900px; margin: 0 auto;">
+    <header style="margin-bottom: 5rem; text-align: left;">
+        <span
+            style="color: var(--accent); font-weight: 800; letter-spacing: 0.2em; text-transform: uppercase; font-size: 0.8rem;">Logistics</span>
+        <h1 style="font-size: 4rem; letter-spacing: -3px; margin-top: 0.5rem;">Transmission Info</h1>
     </header>
 
-    <div class="cart-summary-card">
+    <div class="glass" style="padding: 4rem; border-radius: 40px;">
         <form method="post">
             {% csrf_token %}
-            <div style="display: grid; grid-template-columns: 1fr; gap: 2rem;">
+            <div style="display: grid; gap: 3rem;">
                 <div class="form-group">
                     <label
-                        style="display: block; margin-bottom: 0.75rem; font-weight: 600; font-size: 0.9rem; color: var(--text-main);">Full
+                        style="display: block; margin-bottom: 1rem; font-weight: 800; font-size: 0.75rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.1em;">Recipient
                         Name</label>
-                    <input type="text" name="full_name" class="form-control" placeholder="John Doe" required>
+                    <input type="text" name="full_name" class="form-control"
+                        placeholder="Identity Verification Required" style="background: rgba(0,0,0,0.2);" required>
                 </div>
 
                 <div class="form-group">
                     <label
-                        style="display: block; margin-bottom: 0.75rem; font-weight: 600; font-size: 0.9rem; color: var(--text-main);">Shipping
-                        Address</label>
-                    <textarea name="address" class="form-control" rows="3" placeholder="Street Name, House Number"
-                        required></textarea>
+                        style="display: block; margin-bottom: 1rem; font-weight: 800; font-size: 0.75rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.1em;">Coordinate
+                        Allocation (Address)</label>
+                    <textarea name="address" class="form-control" rows="3" placeholder="Residential or Commercial Hub"
+                        style="background: rgba(0,0,0,0.2);" required></textarea>
                 </div>
 
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem;">
                     <div class="form-group">
                         <label
-                            style="display: block; margin-bottom: 0.75rem; font-weight: 600; font-size: 0.9rem; color: var(--text-main);">City</label>
-                        <input type="text" name="city" class="form-control" placeholder="New York" required>
+                            style="display: block; margin-bottom: 1rem; font-weight: 800; font-size: 0.75rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.1em;">Urban
+                            Sector (City)</label>
+                        <input type="text" name="city" class="form-control" placeholder="Metropolis"
+                            style="background: rgba(0,0,0,0.2);" required>
                     </div>
                     <div class="form-group">
                         <label
-                            style="display: block; margin-bottom: 0.75rem; font-weight: 600; font-size: 0.9rem; color: var(--text-main);">Postal
-                            Code</label>
-                        <input type="text" name="postal_code" class="form-control" placeholder="10001" required>
+                            style="display: block; margin-bottom: 1rem; font-weight: 800; font-size: 0.75rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.1em;">Postal
+                            Index</label>
+                        <input type="text" name="postal_code" class="form-control" placeholder="Region Code"
+                            style="background: rgba(0,0,0,0.2);" required>
                     </div>
                 </div>
 
-                <div style="border-top: 1.5px solid #f0f0f2; margin: 1rem 0; padding-top: 2rem;">
+                <div
+                    style="border-top: 1px solid var(--glass-border); margin-top: 2rem; padding-top: 3rem; display: flex; flex-direction: column; gap: 1.5rem;">
                     <button type="submit" class="btn btn-primary"
-                        style="width: 100%; padding: 1.25rem; font-size: 1.1rem;">
-                        Proceed to Payment
+                        style="padding: 1.5rem; border-radius: 20px; font-size: 1.1rem;">
+                        Authorize Payment Gateway
                     </button>
                     <a href="{% url 'cart_detail' %}"
-                        style="display: block; text-align: center; margin-top: 1.5rem; color: var(--text-dim); font-size: 0.95rem;">
-                        Return to Shopping Bag
-                    </a>
+                        style="text-align: center; color: var(--text-secondary); font-size: 0.8rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em;">Return
+                        to Selection</a>
                 </div>
             </div>
         </form>
