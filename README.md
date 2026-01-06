@@ -1,54 +1,68 @@
-# 👟 BuyNexa - Premium E-Commerce Shoe Store
+# 🌌 BuyNexa - Hyper-Premium E-Commerce Experience
 
-BuyNexa is a modern, high-performance e-commerce platform built with Django, designed specifically for premium footwear retailers. It features a sleek user interface, robust product management, and a seamless shopping experience.
+BuyNexa is a state-of-the-art, hyper-premium e-commerce platform designed for elite footwear. Built on **Django 5.x**, it features a cinematic "Midnight & Neon" design system, AI-generated commercial assets, and a highly optimized user journey.
 
-![BuyNexa Banner](https://github.com/anusha-anuak/website/raw/main/banner.png)
+![BuyNexa Banner](src/static/images/hero_banner.png)
 
-## 🚀 Key Features
+## ✨ Experimental UI/UX: The "Midnight" Overhaul
 
-- **Storefront & Catalog**: Browse products by category (Sneakers, Formal, Boots, for example) with beautiful imagery and detailed descriptions.
-- **Shopping Cart**: Fully functional cart system with the ability to add, update, and remove items.
-- **Secure Authentication**: Integrated with `django-allauth` for secure login, signup, and Google Social Auth.
-- **Order Management**: Comprehensive checkout process with order tracking and status updates (Pending, Processing, Shipped, Delivered).
-- **Admin Dashboard**: Powerful administrative control over products, categories, users, and orders.
-- **Responsive Design**: Optimized for both desktop and mobile devices for a fluid shopping experience.
+BuyNexa has been completely re-engineered with a focus on visual excellence and premium interactions:
+
+- **Midnight & Neon Aesthetics**: A deep indigo and midnight-black palette accented by electric violet neon glows.
+- **Floating Glassmorphism**: A futuristic, centered navigation bar using real-time backdrop-blur technology.
+- **Cinematic Motion**: Custom Cubic-Bezier transitions and "Blur-to-Focus" reveal animations for every page.
+- **AI-Enhanced Catalog**: Integrated hyper-realistic commercial photography generated via advanced AI models.
+- **Neo-Minimalist Layouts**: Clean "Manifest-style" order cards and spacious high-contrast product spec sheets.
+
+## 🚀 Core Features
+
+- **🌐 Elite Catalog**: Interactive product discovery with glow-border transition containers.
+- **🛍️ The Archive (Cart)**: Comprehensive selection management with glassmorphism row items.
+- **🔐 Secure Authentication**: Multi-channel auth including Google Social Login and secure local credentials.
+- **🏦 Logistics & Finance Hub**: Futuristic multi-step checkout with encrypted-vault payment simulation.
+- **🛠️ Command Center**: A full-featured staff dashboard for inventory control and product releases.
+- **📦 Acquisition History**: High-end order tracking with premium status indicators and acquisition manifests.
 
 ## 🛠️ Technology Stack
 
-- **Backend**: Python 3.x, Django 5.x
-- **Frontend**: HTML5, Vanilla CSS, JavaScript
-- **Database**: SQLite3 (Development)
-- **Authentication**: Django Allauth (Social & Local)
-- **Image Processing**: Pillow (for product/category images)
+| Layer | Technologies |
+| :--- | :--- |
+| **Backend** | Python 3.x, Django 5.2+ |
+| **Database** | SQLite3 (Persistent storage) |
+| **Auth** | Django-Allauth (Local + Google Provider) |
+| **UI System** | Vanilla CSS3 (Custom Design System), HTML5 |
+| **Typography** | Outfit (Headers), Inter (Body) |
+| **Imaging** | Pillow, AI-Generated Assets |
 
-## 📁 Project Structure
+## 📁 Elite Project Structure
 
 ```text
 online website/
 ├── src/
-│   ├── BuyNexa/          # Project configuration & settings
-│   ├── store/           # Main application logic (models, views, forms)
-│   ├── static/          # CSS, JS, and global assets
-│   ├── templates/       # HTML templates
-│   ├── media/           # User-uploaded product images
-│   └── manage.py        # Django management script
-├── venv/                # Virtual environment
-├── .gitignore           # Git exclusion rules
-└── requirements.txt     # Python dependencies
+│   ├── BuyNexa/          # Core Project Configuration
+│   ├── store/           # Application Logic (Models, Views, Forms)
+│   ├── static/          # Assets, Custom Design System
+│   │   └── images/      # AI-Generated Commercial Photography
+│   └── templates/       # Premium HTML Blueprints
+├── .gitignore           # Version Control Exclusion
+└── requirements.txt     # Dependency Manifest
 ```
 
-## ⚙️ Installation & Usage
+## ⚙️ Deployment & Initialization
 
-1. **Clone the repository**:
+1. **Clone the Repository**:
    ```bash
    git clone https://github.com/anusha-anuak/website.git
    cd website
    ```
 
-2. **Set up Virtual Environment**:
+2. **Initialize Environment**:
    ```bash
    python -m venv venv
-   source venv/bin/activate  # On Windows: venv\Scripts\activate
+   # Windows:
+   venv\Scripts\activate
+   # Linux/macOS:
+   source venv/bin/activate
    ```
 
 3. **Install Dependencies**:
@@ -56,22 +70,23 @@ online website/
    pip install -r requirements.txt
    ```
 
-4. **Run Migrations**:
+4. **Initialize Database & Assets**:
    ```bash
    python manage.py migrate
+   python src/setup_data.py        # Seed the elite catalog
+   python src/setup_social_app.py  # Initialize social auth gateways
    ```
 
-5. **Start Development Server**:
+5. **Engage Development Server**:
    ```bash
    python manage.py runserver
    ```
-   The site will be available at `http://127.0.0.1:8000/`.
+   Access the experience at `http://127.0.0.1:8000/`.
 
-## 🛡️ Admin Access
-To access the admin panel (`/admin/`), create a superuser:
-```bash
-python manage.py createsuperuser
-```
+## 🛡️ Administrative Access
+Enter the command center at `/admin/` or access the front-end dashboard as a staff user. Default superuser credentials (if using `setup_data.py`):
+- **Username**: `admin`
+- **Password**: `admin`
 
 ---
 *Developed with ❤️ by [Anusha](https://github.com/anusha-anuak)*
